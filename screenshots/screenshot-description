@@ -1,0 +1,30 @@
+## Screenshots
+
+### Device Information Folders
+`device_info_folders.png`
+- Shows two main folders: `labcontroller` and `production`
+- Demonstrates the directory structure for storing device information
+
+### WLAN Configuration Comparison
+`wlan_configuration.png`
+- Excel sheet showing WLAN details across different devices
+- Includes columns for Device, WLAN ID, WLAN Name, Status, and Auth Type
+- All WLANs are shown as "UP" with WPA2 authentication
+
+### Device Overview
+`device_overview.png`
+- Provides a summary of devices in the overview sheet
+- Highlights include IOS XE Version, Model, AP Count, and WLAN Count
+- Differences are highlighted in orange for easy comparison
+
+### Access Point Summary
+`ap_summary.png`
+- Text file showing detailed Access Point information
+- Includes AP Name, Model, Ethernet MAC, Location, Country, and State
+- All 8 APs are shown as "Registered"
+
+### Device-Specific Files
+`production_files.png`
+- Shows the various text files collected for a single device
+- Files include: aaa_servers.txt, ap_summary.txt, hostname.txt, etc.
+- Demonstrates the comprehensive data collection approach
