@@ -1,0 +1,98 @@
+---
+- name: Gather Cisco Device Information
+  hosts: cisco_devices
+  gather_facts: no
+  vars:
+    ansible_connection: network_cli
+    ansible_network_os: ios
+    output_dir: "./device_info/{{ inventory_hostname }}"
+
+  tasks:
+    - name: Create Output Directory
+      local_action:
+        module: file
+        path: "{{ output_dir }}"
+        state: directory
+
+    - name: Collect Device Hostname
+      cisco.ios.ios_command:
+        commands: 
+          - show running-config | include hostname
+      register: hostname_output
+
+    - name: Collect System Information
+      cisco.ios.ios_command:
+        commands:
+          - show version
+      register: version_output
+
+    - name: Collect Interface Information
+      cisco.ios.ios_command:
+        commands:
+          - show interfaces
+      register: interfaces_output
+
+    - name: Collect WLAN Configuration (for Wireless Controllers)
+      cisco.ios.ios_command:
+        commands:
+          - show wlan summary
+      register: wlan_output
+      ignore_errors: yes
+
+    - name: Collect NTP Server Information 
+      cisco.ios.ios_command:
+        commands:
+          - show ntp config
+      register: ntp_output
+      ignore_errors: yes
+
+    - name: Collect AP Summary
+      cisco.ios.ios_command:
+        commands:
+          - show ap summary
+      register: ap_output
+      ignore_errors: yes
+
+    - name: Collect Wireless Tag Site Summary
+      cisco.ios.ios_command:
+        commands:
+          - show wireless tag site summary
+      register: tag_site_output
+      ignore_errors: yes
+
+    - name: Collect VLAN Brief
+      cisco.ios.ios_command:
+        commands:
+          - show vlan brief
+      register: vlan_brief_output
+      ignore_errors: yes
+
+    - name: Collect AAA Servers Summary
+      cisco.ios.ios_command:
+        commands:
+          - show aaa servers
+      register: aaa_output
+      ignore_errors: yes
+
+    - name: Collect Running Configuration
+      cisco.ios.ios_command:
+        commands:
+          - show running-config
+      register: running_config
+
+    - name: Save Collected Information to Files
+      copy:
+        content: "{{ item.content }}"
+        dest: "{{ output_dir }}/{{ item.filename }}"
+      loop:
+        - { content: "{{ hostname_output.stdout[0] | default('No hostname found') }}", filename: "hostname.txt" }
+        - { content: "{{ version_output.stdout[0] | default('No version information found') }}", filename: "version.txt" }
+        - { content: "{{ interfaces_output.stdout[0] | default('No interface information found') }}", filename: "interfaces.txt" }
+        - { content: "{{ wlan_output.stdout[0] | default('No WLAN configuration found') }}", filename: "wlan.txt" }
+        - { content: "{{ ntp_output.stdout[0] | default('No NTP configuration found') }}", filename: "ntp.txt" }
+        - { content: "{{ ap_output.stdout[0] | default('No AP summary found') }}", filename: "ap_summary.txt" }
+        - { content: "{{ tag_site_output.stdout[0] | default('No wireless tag site summary found') }}", filename: "tag_site.txt" }
+        - { content: "{{ vlan_brief_output.stdout[0] | default('No vlan configuration found') }}", filename: "vlan_brief.txt" }
+        - { content: "{{ aaa_output.stdout[0] | default('No AAA servers found') }}", filename: "aaa_servers.txt" }
+        - { content: "{{ running_config.stdout[0] | default('No running configuration found') }}", filename: "running-config.txt" }
+      delegate_to: localhost
