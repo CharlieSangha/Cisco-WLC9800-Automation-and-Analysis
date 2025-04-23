@@ -1,4 +1,4 @@
-# Cisco C9800 WLC Network Device Information Gathering Automation
+# Cisco C9800 WLC Network Device Information Gathering & Analysis
 
 ## Overview
 This project automates the collection of comprehensive information from Cisco C9800 Wireless Controllers using Ansible and a Python analysis script. The automation was developed for a work project involving the discovery of 50 C9800 WLCs prior to designing a new solution to consolidate the controllers and implement Cisco Catalyst Center for Automation.
