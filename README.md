@@ -1,4 +1,4 @@
-# Cisco Network Device Information Gathering Automation
+# Cisco C9800 WLC Network Device Information Gathering Automation
 
 ## Overview
 This project automates the collection of comprehensive information from Cisco C9800 Wireless Controllers using Ansible and a Python analysis script. The automation was developed for a work project involving the discovery of 50 C9800 WLCs prior to designing a new solution to consolidate the controllers and implement Cisco Catalyst Center for Automation.
@@ -77,7 +77,12 @@ python wlc_comparison_tool.py --base-dir ./device_info --output wlc_comparison_r
 ├── device_info_playbook.yml
 ├── wlc_comparison_tool.py
 └── screenshots/
-    └── sample_output.png
+    ├── screenshot-description.md
+    ├── Parent-Folder-Screenshot.png
+    ├── Sub-Folder-Screenshot.png
+    ├── Sample-Excel-WLAN-Tab-screenshot.png
+    ├── Sample-Excel-Summary-screenshot.png
+    └── Sample-ap-output-screenshot.png
 ```
 
 ## Example Output
@@ -109,9 +114,10 @@ Information is saved in `./device_info/[hostname]/` directory with files:
 The script provides detailed logging to help diagnose any issues during processing.
 
 ## Future Improvements
-- Enhance parsing and analysis of collected data
 - Implement more robust error handling
 - Create more advanced comparative analysis between devices
+- Fix minor formatting issues to Excel output
+- Include the AP Summary as an output in Excel. 
 - Add support for additional network device types
 
 ## Contributing
